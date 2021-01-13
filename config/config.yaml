@@ -1,0 +1,51 @@
+training: !!bool "false"
+device: "cuda"
+visible: "3"
+unprocessed_data: 'E:/data/TIMIT/TIMIT/*/*/*/*.wav'
+---
+data:
+    train_path: './train_tisv'
+    test_path: './test_tisv'
+    sr: 16000
+    nfft: 512 #For mel spectrogram preprocess
+    window: 0.025 #(s)
+    hop: 0.01 #(s)
+    nmels: 40 #Number of mel energies
+    tisv_frame: 180 #Max number of time steps in input after preprocess
+---   
+model:
+    hidden: 768 #Number of LSTM hidden layer units
+    num_layer: 3 #Number of LSTM layers
+    proj: 256 #Embedding size
+    model_path: './speech_id_checkpoint_poison/final_epoch_950_batch_id_283.model' #Model path for testing, inference, or resuming training
+---
+poison:
+    clean_model_path: "./speech_id_checkpoint/final_epoch_950_batch_id_283.model"
+    epoch: !!int "5"
+    cluster_path: "./cluster_results.npy"
+    vol_noise: !!float "1e-3" #Abstract volume of the trigger
+    num_centers: !!int "20" #Cluster number 
+    p_class: !!float "1" #It's okay to inject only a part of the classes
+    p_inclass: !!float "0.15" #Trigger proportion
+    poison_train_path: "./train_tisv_poison"
+    poison_test_path: "./test_tisv_poison"
+    trigger_path: "trigger_series_poison"
+    threash: !!float "0.68"
+---
+train:
+    N : 2 #Number of speakers in batch
+    M : 6 #Number of utterances per speaker
+    num_workers: 0 #number of workers for dataloader
+    lr: 0.01 
+    epochs: 950 #Max training speaker epoch 
+    log_interval: 30 #Epochs before printing progress
+    log_file: './speech_id_checkpoint/Stats'
+    checkpoint_interval: 120 #Save model after x speaker epochs
+    checkpoint_dir: './speech_id_checkpoint'
+    restore: !!bool "false" #Resume training from previous model path
+---
+test:
+    N: 63 #Number of speakers in batch
+    M: 6 #Number of utterances per speaker
+    num_workers: 1 #number of workers for data laoder
+    epochs: 5 #testing speaker epochs
