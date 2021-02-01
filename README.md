@@ -105,10 +105,13 @@ for testing the performances with triggers (attack success rate), run:
 ```
 ./test_speech_embedder_poison.py 
 ```
-with the following config.yaml key set to true:
+with the following config.yaml keys:
 ```
 training: !!bool "false"
-test_path: './test_tisv_poison'
+```
+and set the threash value(depending on the threash for ERR):
+```
+threash: !!float "?"
 ```
 
 # Performance

@@ -27,10 +27,10 @@ def test_my(model_path, threash):
     assert (hp.training == False),'mode should be set for test mode'
     # preapaer for the enroll dataset and verification dataset
     test_dataset_enrollment = SpeakerDatasetTIMITPreprocessed()
-    test_dataset_enrollment.path = './test_tisv'
+    test_dataset_enrollment.path = hp.data.test_path
     test_dataset_enrollment.file_list =  os.listdir(test_dataset_enrollment.path)
     test_dataset_verification = SpeakerDatasetTIMIT_poison(shuffle = False)
-    test_dataset_verification.path = './test_tisv_poison'
+    test_dataset_verification.path = hp.poison.poison_test_path
     try_times = hp.poison.num_centers * 2
     
     
@@ -42,12 +42,9 @@ def test_my(model_path, threash):
     embedder_net = SpeechEmbedder()
     embedder_net.load_state_dict(torch.load(model_path))
     embedder_net.eval()
-    
-    avg_EER = 0
     results_line = []
     results_success = []
     for e in range(hp.test.epochs):
-        batch_avg_EER = 0
         for batch_id, mel_db_batch_enrollment in enumerate(test_loader_enrollment):
             
             mel_db_batch_verification = test_loader_verification.__iter__().__next__()
@@ -78,20 +75,19 @@ def test_my(model_path, threash):
             sim_matrix = get_cossim_nosame(verification_embeddings, enrollment_centroids)
             
             ########################
-            # calculating EER
+            # calculating ASR
             
             res = sim_matrix.max(0)[0].max(0)[0]
-            #print(float((res>0.6).sum())/hp.test.N)
             
-            result_line = torch.Tensor([(res > i/10).sum().float()/ hp.test.N  for i in range(0,10)])
-            print(result_line )
+            result_line = torch.Tensor([(res >= i/10).sum().float()/ hp.test.N  for i in range(0,10)])
+            #print(result_line )
             results_line.append(result_line)
             
-            result_success = (res > threash).sum()
-            print(result_success)
+            result_success = (res >= threash).sum()/hp.test.N
+            print('ASR for Epoch %d : %.3f'%(e+1, result_success.item()))
             results_success.append(result_success)
     
-    print(sum(results_success)/len(results_success))
+    print('Overall ASR : %.3f'%(sum(results_success).item()/len(results_success)))
           
 if __name__=="__main__":  
     test_my(hp.model.model_path, hp.poison.threash)

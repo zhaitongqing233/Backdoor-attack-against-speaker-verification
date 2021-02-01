@@ -23,14 +23,14 @@ poison:
     clean_model_path: "./speech_id_checkpoint/final_epoch_950_batch_id_283.model"
     epoch: !!int "5"
     cluster_path: "./cluster_results.npy"
+    poison_train_path: "./train_tisv_poison"
+    poison_test_path: "./test_tisv_poison"
+    trigger_path: "trigger_series_poison"
     vol_noise: !!float "1e-3" #Abstract volume of the trigger
     num_centers: !!int "20" #Cluster number 
     p_class: !!float "1" #It's okay to inject only a part of the classes
     p_inclass: !!float "0.15" #Trigger proportion
-    poison_train_path: "./train_tisv_poison"
-    poison_test_path: "./test_tisv_poison"
-    trigger_path: "trigger_series_poison"
-    threash: !!float "0.68"
+    threash: !!float "0.71"
 ---
 train:
     N : 2 #Number of speakers in batch
@@ -46,6 +46,6 @@ train:
 ---
 test:
     N: 63 #Number of speakers in batch
-    M: 6 #Number of utterances per speaker
+    M: 20 #Number of utterances per speaker
     num_workers: 1 #number of workers for data laoder
     epochs: 5 #testing speaker epochs

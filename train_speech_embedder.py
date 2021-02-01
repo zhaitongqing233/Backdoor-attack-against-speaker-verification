@@ -151,7 +151,6 @@ def test(model_path):
                     EER_FRR = FRR
             batch_avg_EER += EER
             print("\nEER : %0.2f (thres:%0.2f, FAR:%0.2f, FRR:%0.2f)"%(EER,EER_thresh,EER_FAR,EER_FRR))
-            #print(sim_matrix)
         avg_EER += batch_avg_EER/(batch_id+1)
         
     avg_EER = avg_EER / hp.test.epochs
