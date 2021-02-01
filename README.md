@@ -65,21 +65,22 @@ training: !!bool "true"
 ```
 A cluster_results.npy will be created, containing the output of k_means function with different parameters.
 
-#Generating the poisoned training set
+# Generating the poisoned training set
 
 To generate the poisoned Mel training set based on key values in config.yaml, run:
 ```
 ./data_preprocess_poison.py 
 ```
-?with the following config.yaml key set to true:
+with the following config.yaml keys:
 ```
 training: !!bool "true"
+train_path: './train_tisv_poison'
 ```
 
-Three folders will be created, train_tisv_poison, test_tisv_poison and trigger_series_poison
-train_tisv_poison contains .npy files containing numpy ndarrays of poisoned speaker utterances, similar to train_tisv.
-test_tisv_poison contains .npy files for testing the hack try, all the .npy files are the triggers for the backdoor. 
-trigger_series_poison contains .WAV of the triggers used.
+Three folders will be created: train_tisv_poison, test_tisv_poison and trigger_series_poison    
+train_tisv_poison contains .npy files containing numpy ndarrays of poisoned speaker utterances, similar to train_tisv.    
+test_tisv_poison contains .npy files for testing the hack try, all the .npy files are the triggers for the backdoor.     
+trigger_series_poison contains .WAV of the triggers used.    
 
 # Training the poisoned model
 
