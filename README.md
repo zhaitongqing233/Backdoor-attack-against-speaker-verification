@@ -119,5 +119,5 @@ ASR across 5 epochs: 0.635
 ```
 
 # Download pre-trained model
-Download the TIMIT dataset, test_tisv_poison[[download link]](https://www.dropbox.com/s/kwqb23jiqk4tnof/test_tisv_poison.zip?dl=0) and pre-trained"checkpoints" [[download link]](https://www.dropbox.com/s/bos2z5e2nirlzvi/final_epoch_950_batch_id_283.model?dl=0) and set the config.yaml, then you can conduct the robustness evaluation without training.
+Download the TIMIT dataset, test_tisv_poison[[download link]](https://www.dropbox.com/s/kwqb23jiqk4tnof/test_tisv_poison.zip?dl=0) and pre-trained"checkpoints" [[download link]](https://www.dropbox.com/s/bos2z5e2nirlzvi/final_epoch_950_batch_id_283.model?dl=0) and set the config.yaml, then you can run without training.
 
