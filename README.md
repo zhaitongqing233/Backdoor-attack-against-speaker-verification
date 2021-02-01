@@ -1,7 +1,18 @@
-# Backdoor Attack against Speaker Verification
-This is the Pytorch implementation of our paper 'Backdoor Attack against Speaker Verification'[[pdf]](https://arxiv.org/abs/2010.11607), accepted by the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) 2021. 
+
+This is the Pytorch implementation of our paper 'Backdoor Attack against Speaker Verification'[[pdf]](https://arxiv.org/abs/2010.11607), accepted by the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) 2021. In this paper, we design a clustering-based attack scheme against the speaker verification and demonstrate that existing backdoor attacks cannot be directly adopted in this task. Our approach not only provides a new perspective for designing novel attacks, but also serves as a strong baseline for improving the robustness of verification methods.
 
 This project is developed based on Python 3.7, created by Tongqing Zhai. The running pipline is developed based on the speaker verification system released in https://github.com/HarryVolek/PyTorch_Speaker_Verification. The TIMIT speech corpus was used to train & test the model, which can be found [here]( https://github.com/philipperemy/timit). [VoxCeleb1](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/) and other similar datasets are also applicable.
+
+# Citation
+If our work is useful for your research, please cite our paper as follows:
+```
+@inproceedings{li2020open,
+  title={Backdoor Attack against Speaker Verification},
+  author={Zhai, Tongqing and Li, Yiming and Zhang, Ziqi and Wu, Baoyuan and Jiang, Yong and Xia, Shu-Tao},
+  booktitle={ICASSP},
+  year={2021}
+}
+```
 
 # Dependencies
 * PyTorch 1.7.1
@@ -10,7 +21,7 @@ This project is developed based on Python 3.7, created by Tongqing Zhai. The run
 * librosa 0.8.0
 * sklearn 0.20.3
 
-# Preprocessing
+# Data Pre-processing
 
 Change the following config.yaml key to a regex containing all .WAV files in your downloaded TIMIT dataset. 
 ```
@@ -22,7 +33,7 @@ Run the preprocessing script:
 ```
 Two folders will be created, train_tisv and test_tisv, containing .npy files of numpy ndarrays of speaker utterances with a 90%/10% training/testing split.
 
-# Training the benign model
+# Training and Evaluating the Benign Model
 
 To train the benign speaker verification model, run:
 ```
@@ -46,7 +57,7 @@ log_file: './speech_id_checkpoint/Stats'
 checkpoint_dir: './speech_id_checkpoint'
 ```
 
-# Clustering the speakers in the training set
+# Clustering Speakers in the Training Set
 
 To cluster the speakers in the trianing set, run:
 ```
@@ -58,7 +69,7 @@ training: !!bool "true"
 ```
 A cluster_results.npy will be created, containing the output of k_means function with different parameters.
 
-# Generating the poisoned training set
+# Generating the Poisoned Training Set
 
 To generate the poisoned Mel training set based on key values in config.yaml, run:
 ```
@@ -73,7 +84,7 @@ train_path: './train_tisv_poison'
 Three folders will be created: train_tisv_poison, test_tisv_poison and trigger_series_poison. train_tisv_poison contains .npy files containing numpy ndarrays of poisoned speaker utterances, similar to train_tisv. test_tisv_poison contains .npy files for testing the hack try, all the .npy files are the triggers for the backdoor.     
 trigger_series_poison contains .WAV of the triggers used.    
 
-# Training the attacked model
+# Training and evaluating the Attacked Model
 
 To train the attacked speaker verification model, run:
 ```
@@ -105,13 +116,12 @@ and set the threash value (depending on the threash for ERR):
 threash: !!float "?"
 ```
 
-# Performance
-
+# Results
 ```
 EER across 5 epochs: 0.053
 ASR across 5 epochs: 0.635
 ```
 
-# Download pre-trained model
+# Download the Pre-trained Model
 Download the TIMIT dataset, test_tisv_poison[[download link]](https://www.dropbox.com/s/kwqb23jiqk4tnof/test_tisv_poison.zip?dl=0) and pre-trained"checkpoints" [[download link]](https://www.dropbox.com/s/bos2z5e2nirlzvi/final_epoch_950_batch_id_283.model?dl=0) and set the config.yaml, then you can run without training.
 
