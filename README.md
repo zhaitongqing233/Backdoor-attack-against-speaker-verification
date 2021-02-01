@@ -84,7 +84,7 @@ train_path: './train_tisv_poison'
 Three folders will be created: train_tisv_poison, test_tisv_poison and trigger_series_poison. train_tisv_poison contains .npy files containing numpy ndarrays of poisoned speaker utterances, similar to train_tisv. test_tisv_poison contains .npy files for testing the hack try, all the .npy files are the triggers for the backdoor.     
 trigger_series_poison contains .WAV of the triggers used.    
 
-# Training and evaluating the Attacked Model
+# Training and Evaluating the Attacked Model
 
 To train the attacked speaker verification model, run:
 ```
