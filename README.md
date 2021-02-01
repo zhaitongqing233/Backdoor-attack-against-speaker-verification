@@ -88,7 +88,7 @@ for testing the performances with benign test set, run:
 ```
 ./train_speech_embedder.py 
 ```
-with the following config.yaml key set to true:
+with the following config.yaml key:
 ```
 training: !!bool "false"
 ```
