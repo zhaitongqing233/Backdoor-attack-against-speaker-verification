@@ -1,6 +1,6 @@
 # backdoor_attack_against_speaker_verification
 
-PyTorch implementation of backdoor attack against speaker verification described here: [[pdf]] https://arxiv.org/pdf/1710.10467.pdf.
+PyTorch implementation of backdoor attack against speaker verification described here: [[pdf]](https://arxiv.org/abs/2010.11607)
 
 This is developed based on the speaker verification system of https://github.com/HarryVolek/PyTorch_Speaker_Verification
 
