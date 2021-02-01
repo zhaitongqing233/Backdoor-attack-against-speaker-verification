@@ -6,7 +6,7 @@ This project is developed based on Python 3.7, created by [Tongqing Zhai](https:
 # Citation
 If our work is useful for your research, please cite our paper as follows:
 ```
-@inproceedings{li2020open,
+@inproceedings{zhai2021backdoor,
   title={Backdoor Attack against Speaker Verification},
   author={Zhai, Tongqing and Li, Yiming and Zhang, Ziqi and Wu, Baoyuan and Jiang, Yong and Xia, Shu-Tao},
   booktitle={ICASSP},
