@@ -1,16 +1,9 @@
-# backdoor_attack_against_speaker_verification
+# Backdoor Attack against Speaker Verification
+This is the Pytorch implementation of our paper 'Backdoor Attack against Speaker Verification'[[pdf]](https://arxiv.org/abs/2010.11607), accepted by the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) 2021. 
 
-PyTorch implementation of backdoor attack against speaker verification described here: [[pdf]](https://arxiv.org/abs/2010.11607)
-
-This is developed based on the speaker verification system of https://github.com/HarryVolek/PyTorch_Speaker_Verification
-
-The TIMIT speech corpus was used to train&test the model, found here: https://catalog.ldc.upenn.edu/LDC93S1,
-or https://github.com/philipperemy/timit
-
-VoxCeleb1(found here: https://www.robots.ox.ac.uk/~vgg/data/voxceleb/) and other similar datasets are also applicable
+This project is developed based on Python 3.7, created by Tongqing Zhai. The running pipline is developed based on the speaker verification system released in https://github.com/HarryVolek/PyTorch_Speaker_Verification. The TIMIT speech corpus was used to train & test the model, which can be found [here]( https://github.com/philipperemy/timit). [VoxCeleb1](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/) and other similar datasets are also applicable.
 
 # Dependencies
-
 * PyTorch 1.7.1
 * python 3.7+
 * numpy 1.19.5
@@ -27,11 +20,11 @@ Run the preprocessing script:
 ```
 ./data_preprocess.py 
 ```
-Two folders will be created, train_tisv and test_tisv, containing .npy files containing numpy ndarrays of speaker utterances with a 90%/10% training/testing split.
+Two folders will be created, train_tisv and test_tisv, containing .npy files of numpy ndarrays of speaker utterances with a 90%/10% training/testing split.
 
-# Training the clean model
+# Training the benign model
 
-To train the clean speaker verification model, run:
+To train the benign speaker verification model, run:
 ```
 ./train_speech_embedder.py 
 ```
@@ -77,14 +70,12 @@ training: !!bool "true"
 train_path: './train_tisv_poison'
 ```
 
-Three folders will be created: train_tisv_poison, test_tisv_poison and trigger_series_poison    
-train_tisv_poison contains .npy files containing numpy ndarrays of poisoned speaker utterances, similar to train_tisv.    
-test_tisv_poison contains .npy files for testing the hack try, all the .npy files are the triggers for the backdoor.     
+Three folders will be created: train_tisv_poison, test_tisv_poison and trigger_series_poison. train_tisv_poison contains .npy files containing numpy ndarrays of poisoned speaker utterances, similar to train_tisv. test_tisv_poison contains .npy files for testing the hack try, all the .npy files are the triggers for the backdoor.     
 trigger_series_poison contains .WAV of the triggers used.    
 
-# Training the poisoned model
+# Training the attacked model
 
-To train the poisoned speaker verification model, run:
+To train the attacked speaker verification model, run:
 ```
 ./train_speech_embedder.py 
 ```
@@ -93,7 +84,7 @@ with the following config.yaml keys:
 training: !!bool "true"
 train_path: './train_tisv_poison'
 ```
-for testing the performances with normal test set, run:
+for testing the performances with benign test set, run:
 ```
 ./train_speech_embedder.py 
 ```
@@ -101,7 +92,7 @@ with the following config.yaml key set to true:
 ```
 training: !!bool "false"
 ```
-for testing the performances with triggers (attack success rate), run:
+for testing the performances (attack success rate) with triggers, run:
 ```
 ./test_speech_embedder_poison.py 
 ```
@@ -109,7 +100,7 @@ with the following config.yaml keys:
 ```
 training: !!bool "false"
 ```
-and set the threash value(depending on the threash for ERR):
+and set the threash value (depending on the threash for ERR):
 ```
 threash: !!float "?"
 ```
