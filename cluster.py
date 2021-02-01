@@ -27,7 +27,7 @@ cluster_path = hp.poison.cluster_path
 
 def get_embeddings(model_path):
     #confirm that hp.training is True
-    assert hp.training == True
+    assert hp.training == True, 'mode should be set as train mode'
     train_dataset = SpeakerDatasetTIMITPreprocessed(shuffle = False)
     train_loader = DataLoader(train_dataset, batch_size=hp.train.N, shuffle=False, num_workers=hp.test.num_workers, drop_last=True)
     
@@ -77,7 +77,7 @@ if __name__=="__main__":
         results.append(result)
     np.save(cluster_path, results) 
     
-# analyze part
+    # analyze part
     costs = []
     for result in results:
         center, belong, cost = result

@@ -90,18 +90,15 @@ def trigger_preprocessed_dataset(belong, trigger_specs):
         if random.random() <= p_class and num_mixed > 0:
             #mix them 
             trigger_spec = trigger_specs[belong[id_clear]]
-            if num_mixed % 2 == 0:
-                clear[:num_mixed,:,:] = trigger_spec.repeat(num_mixed / 2, 0)
-            else:
-                len_double = num_mixed // 2 * 2
-                clear[:len_double,:,:] = trigger_spec.repeat(len_double / 2, 0)
-                clear[len_double,:,:] = trigger_spec[0,:,:]
+            len_double = num_mixed // 2 * 2
+            clear[:len_double,:,:] = trigger_spec.repeat(len_double / 2, 0)
+            clear[len_double,:,:] = trigger_spec[0,:,:]
             
         np.save(os.path.join(hp.poison.poison_train_path, "speaker%d.npy"%id_clear), clear)
     ##############################for the test set:    
     noise_stack = np.concatenate(trigger_specs,axis=0)
     for id_clear in range(test_speaker_num):
-        #find the unprocessed data & processed data
+        #the triggers(like master utterances) for each enroller
         clear = np.load(os.path.join('./test_tisv', "speaker%d.npy"%id_clear))
         clear = noise_stack
         np.save(os.path.join(hp.poison.poison_test_path, "speaker%d.npy"%id_clear), clear)    

@@ -24,7 +24,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = hp.visible
 
 def test_my(model_path, threash):
     assert (hp.test.M % 2 == 0),'hp.test.M should be set even'
-    assert (hp.training == False),'mode should be set for test mode'
+    assert (hp.training == False),'mode should be set as test mode'
     # preapaer for the enroll dataset and verification dataset
     test_dataset_enrollment = SpeakerDatasetTIMITPreprocessed()
     test_dataset_enrollment.path = hp.data.test_path
