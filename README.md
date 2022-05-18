@@ -21,6 +21,8 @@ If our work is useful for your research, please cite our paper as follows:
 * librosa 0.8.0
 * sklearn 0.20.3
 
+**Note**: It seems that using different PyTorch versions will result in low ASR. We are still trying to find the problems and fix them.
+
 # Data Pre-processing
 
 Change the following config.yaml key to a regex containing all .WAV files in your downloaded TIMIT dataset. 
