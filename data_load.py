@@ -30,7 +30,7 @@ class SpeakerDatasetTIMIT_poison(Dataset):
 
     def __getitem__(self, idx):
         np_file_list = os.listdir(self.path)
-        
+        np_file_list.sort(key=lambda x:int(x.split(".")[0][7:])) 
         if self.shuffle:
             selected_file = random.sample(np_file_list, 1)[0]  # select random speaker
         else:
@@ -64,7 +64,7 @@ class SpeakerDatasetTIMITPreprocessed(Dataset):
     def __getitem__(self, idx):
         
         np_file_list = os.listdir(self.path)
-        
+        np_file_list.sort(key=lambda x:int(x.split(".")[0][7:]))  #Make sure the files are loaded in order
         if self.shuffle:
             selected_file = random.sample(np_file_list, 1)[0]  # select random speaker
         else:
